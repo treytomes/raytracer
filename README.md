@@ -1,6 +1,9 @@
 # raytracer
 My implementation of the Ray Tracer Challenge.
 
+* [Book errata](https://pragprog.com/titles/jbtracer/errata)
+* [Book forum](http://forum.raytracerchallenge.com/)
+
 ## Tuesday, February 18, 2020
 I've started reading "The Ray Tracer Challenge" today.
 The topic of ray tracing combines math and computer programming in one of my favorite ways.
