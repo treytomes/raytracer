@@ -16,3 +16,9 @@ I prefer .NET, and will probably pick on C# / .NET Core as that's the direction 
 The unit tests are described using Cucumber syntax.
 While I have tended to prefer xUnit for unit testing,
 I will probably take this opportunity to learn the [SpecFlow library](https://specflow.org/).
+
+## Wednesday, February 19, 2020
+I decided to use xUnit after all.  It's just easier, and doesn't require addition Visual Studio extensions to play nicely.
+For the time being I'm going to use WPF to do the rendering.  As the code doesn't require any rendering yet, this isn't a big
+deal.  I'm not expecting to need hardware accelerated graphics for this, at least at first, so I'll simply be plotting
+points onto an Image control.  It's not as bad as it sounds.
