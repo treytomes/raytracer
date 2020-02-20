@@ -1,4 +1,5 @@
-﻿using System;
+﻿using raytracer.math;
+using System;
 using Tuple = raytracer.math.Tuple;
 
 namespace raytracer.demo.projectiles
@@ -10,23 +11,38 @@ namespace raytracer.demo.projectiles
 	{
 		public static void Main(string[] args)
 		{
+			var start = Tuple.Point(0, 1, 0);
+			var velocity = Tuple.Vector(1, 1.8f, 0).Normalize() * 11.25f;
+
 			// Projectile starts 1 unit above the origin.
 			// Velocity is normalized to 1 unit/tick.
-			var p = (position: Tuple.Point(0, 1, 0), velocity: Tuple.Vector(1, 1, 0).Normalize());
+			var p = (position: start, velocity: velocity);
 
 			// Gravity -0.1 units/tick, and wind is -0.01 unit/tick.
-			var e = (gravity: Tuple.Vector(0, -0.1f, 0), wind: Tuple.Vector(-0.01f, 0, 0));
+			var gravity = Tuple.Vector(0, -0.1f, 0);
+			var wind = Tuple.Vector(-0.01f, 0, 0);
+			var e = (gravity: gravity, wind: wind);
 
-
+			var c = ScreenController.Initialize(900, 550);
 
 			var numTicks = 0;
 			Console.WriteLine($"[{numTicks}]: {p.position}");
+			if ((p.position.X >= 0) && (p.position.X < c.Width) && (p.position.Y >= 0) && (p.position.Y < c.Height))
+			{
+				c.SetPixel((int)p.position.X, c.Height - (int)p.position.Y, new Color(1, 0.5f, 0.5f));
+			}
 			while (p.position.Y >= 0)
 			{
 				p = Tick(e, p);
+				if ((p.position.X >= 0) && (p.position.X < c.Width) && (p.position.Y >= 0) && (p.position.Y < c.Height))
+				{
+					c.SetPixel((int)p.position.X, c.Height - (int)p.position.Y, new Color(1, 0.5f, 0.5f));
+				}
 				numTicks++;
 				Console.WriteLine($"[{numTicks}]: {p.position}");
 			}
+			c.Refresh();
+			c.Save("projectile.png");
 		}
 
 		private static (Tuple position, Tuple velocity) Tick((Tuple gravity, Tuple wind) env, (Tuple position, Tuple velocity) proj)
