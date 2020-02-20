@@ -22,3 +22,6 @@ I decided to use xUnit after all.  It's just easier, and doesn't require additio
 For the time being I'm going to use WPF to do the rendering.  As the code doesn't require any rendering yet, this isn't a big
 deal.  I'm not expecting to need hardware accelerated graphics for this, at least at first, so I'll simply be plotting
 points onto an Image control.  It's not as bad as it sounds.
+
+## Thursday, February 20, 2020
+Still feeling conflicted on my Tuple code.  It's the basis of everything else, so it *must* be as perfect as possible.  Chapter 2 is accomplished.  I have made a point of doing the extra side-projects suggested by the author, so the Visual Studio solution also comes with an odd little projectile cannon simulator.  Next up is matrices.
