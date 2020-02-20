@@ -2,6 +2,9 @@
 
 namespace raytracer.math
 {
+	/// <summary>
+	/// Representation for both Vectors and Points.
+	/// </summary>
 	/// <remarks>
 	/// If you add 2 points, W=2, which is a non-sensical result.  But then, why would anyone want to add points?
 	/// A lot of the magic here depends on W being either 0 or 1, and nothing else.
@@ -11,6 +14,10 @@ namespace raytracer.math
 	/// remove the ability to create an inheritance chain.
 	/// 
 	/// Likewise, I am using float instead of double or decimal for the sake of speed.  The output quality should be "good enough".
+	/// 
+	/// I also hate the name collision with System.Tuple.  Maybe a better name for this class will occur to me later.
+	/// 
+	/// I may ultimately replace this with System.Windows.Media.Media3D.[Point3D, Vector3D].
 	/// </remarks>
 	public struct Tuple : IEquatable<Tuple>
 	{
