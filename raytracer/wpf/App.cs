@@ -20,6 +20,7 @@ namespace raytracer
 		private void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
 		{
 			MessageBox.Show(e.Exception.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+			Shutdown(1);
 		}
 
 		[STAThread]

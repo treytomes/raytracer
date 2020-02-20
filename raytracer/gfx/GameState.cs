@@ -28,9 +28,9 @@ namespace raytracer
 
 		public bool IsRenderable { get; protected set; } = true;
 
-		protected int ScreenWidth { get; } = ScreenController.SCREEN_WIDTH;
+		protected int ScreenWidth { get; } = ScreenController.Instance.Width;
 
-		protected int ScreenHeight { get; } = ScreenController.SCREEN_HEIGHT;
+		protected int ScreenHeight { get; } = ScreenController.Instance.Height;
 
 		private List<ActionTimer> Timers { get; } = new List<ActionTimer>();
 

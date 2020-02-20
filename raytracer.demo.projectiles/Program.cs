@@ -10,13 +10,14 @@ namespace raytracer.demo.projectiles
 	{
 		public static void Main(string[] args)
 		{
-
 			// Projectile starts 1 unit above the origin.
 			// Velocity is normalized to 1 unit/tick.
 			var p = (position: Tuple.Point(0, 1, 0), velocity: Tuple.Vector(1, 1, 0).Normalize());
 
 			// Gravity -0.1 units/tick, and wind is -0.01 unit/tick.
 			var e = (gravity: Tuple.Vector(0, -0.1f, 0), wind: Tuple.Vector(-0.01f, 0, 0));
+
+
 
 			var numTicks = 0;
 			Console.WriteLine($"[{numTicks}]: {p.position}");
