@@ -5,6 +5,12 @@ namespace raytracer.math
 	/// <remarks>
 	/// If you add 2 points, W=2, which is a non-sensical result.  But then, why would anyone want to add points?
 	/// A lot of the magic here depends on W being either 0 or 1, and nothing else.
+	/// 
+	/// I spent a lot of time trying to decide whether to have separate classes for Point and Vector;
+	/// whether to use classes or structures.  Structures should be faster in this case, but also
+	/// remove the ability to create an inheritance chain.
+	/// 
+	/// Likewise, I am using float instead of double or decimal for the sake of speed.  The output quality should be "good enough".
 	/// </remarks>
 	public struct Tuple : IEquatable<Tuple>
 	{
@@ -60,6 +66,10 @@ namespace raytracer.math
 		/// The cross product between two vectors (and they *must* be vectors, not points),
 		/// yields a new vector that is perpendicular to both of the inputs.
 		/// </summary>
+		/// <remarks>
+		/// I'm not implementing the * operator on this struct.  Would the * operator be doing
+		/// a cross product or a dot product?  I'd rather make things clear.
+		/// </remarks>
 		/// <param name="left"></param>
 		/// <param name="right"></param>
 		/// <returns></returns>
@@ -77,6 +87,22 @@ namespace raytracer.math
 			return Vector((left.Y * right.Z) - (left.Z * right.Y), (left.Z * right.X) - (left.X * right.Z), (left.X * right.Y) - (left.Y * right.X));
 		}
 
+		public override string ToString()
+		{
+			if (IsPoint())
+			{
+				return $"Point({X}, {Y}, {Z})";
+			}
+			else if (IsVector())
+			{
+				return $"Vector({X}, {Y}, {Z})";
+			}
+			else
+			{
+				return $"Tuple({X}, {Y}, {Z}, {W})";
+			}
+		}
+
 		public bool IsPoint()
 		{
 			return W == 1.0;
@@ -87,6 +113,13 @@ namespace raytracer.math
 			return W == 0.0f;
 		}
 
+		/// <summary>
+		/// Calculate the magnitude / length of a vector, including the W component.
+		/// </summary>
+		/// <remarks>
+		/// This calculation will break down if you try to take the magnitude of a point.
+		/// </remarks>
+		/// <returns>The magnitude / length of the vector.</returns>
 		public float Magnitude()
 		{
 			return (float)Math.Sqrt(X * X + Y * Y + Z * Z + W * W);
