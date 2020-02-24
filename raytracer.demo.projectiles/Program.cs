@@ -9,7 +9,31 @@ namespace raytracer.demo.projectiles
 	/// </summary>
 	public static class Program
 	{
-		public static void Main(string[] args)
+		public static void Main()
+		{
+			var a = new Matrix(new[,] {
+				{ 3f, -9, 7, 3 },
+				{ 3, -8, 2, -9 },
+				{ -4, 4, 4, 1 },
+				{ -6, 5, -1, 1 }
+			});
+
+			//Console.WriteLine(a);
+			Console.WriteLine(Matrix.Identity(4));
+			Console.WriteLine(Matrix.Identity(4).Inverse());
+			Console.WriteLine(a.Inverse().Transpose());
+			Console.WriteLine(a.Transpose().Inverse());
+
+			var i = Matrix.Identity(4);
+
+			Console.WriteLine(i * new Tuple(4, 5, 6, 7));
+
+			i[0, 0] = 2;
+
+			Console.WriteLine(i * new Tuple(4, 5, 6, 7));
+		}
+
+		public static void ProjectileLauncher()
 		{
 			var start = Tuple.Point(0, 1, 0);
 			var velocity = Tuple.Vector(1, 1.8f, 0).Normalize() * 11.25f;

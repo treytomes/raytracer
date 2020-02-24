@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Text;
 
 namespace raytracer.math
@@ -30,6 +31,24 @@ namespace raytracer.math
 
 			_values = new float[Rows, Columns];
 			Array.Copy(values, 0, _values, 0, _size);
+		}
+
+		/// <remarks>
+		/// The assumption is made here that <paramref name="values"/> describes a square matrix.
+		/// </remarks>
+		public Matrix(IEnumerable<float> values)
+		{
+			var sideLength = Math.Sqrt(values.Count());
+			if ((int)sideLength != sideLength)
+			{
+				throw new Exception("Values must define a square matrix.");
+			}
+			Rows = (int)sideLength;
+			Columns = (int)sideLength;
+			_size = Rows * Columns;
+
+			_values = new float[Rows, Columns];
+			Array.Copy(values.ToArray(), 0, _values, 0, _size);
 		}
 
 		#endregion
@@ -74,9 +93,88 @@ namespace raytracer.math
 			{
 				for (var c = 0; c < Columns; c++)
 				{
-					m[c, r] = this[r, c];
+					m[c, r] = _values[r, c];
 				}
 			}
+			return m;
+		}
+
+		public float Determinant()
+		{
+			if (Rows == 2)
+			{
+				return (_values[0, 0] * _values[1, 1]) - (_values[0, 1] * _values[1, 0]);
+			}
+			else
+			{
+				var det = 0f;
+				for (var column = 0; column < Columns; column++)
+				{
+					det += _values[0, column] * Cofactor(0, column);
+				}
+				return det;
+			}
+		}
+
+		public bool IsInvertible()
+		{
+			return Determinant() != 0;
+		}
+
+		public float Minor(int row, int column)
+		{
+			return Submatrix(row, column).Determinant();
+		}
+
+		public float Cofactor(int row, int column)
+		{
+			return Minor(row, column) * ((((row + column) % 2) == 0) ? 1 : -1);
+			//return Minor(row, column) * (((row + column + 1) % 2) * 2 - 1);
+		}
+
+		/// <summary>
+		/// Return a sub-matrix with the given row and column removed.
+		/// </summary>
+		public Matrix Submatrix(int removeRow, int removeColumn)
+		{
+			var values = new float[Rows - 1, Columns - 1];
+			var rd = 0;
+			for (var r = 0; r < Rows; r++)
+			{
+				if (r == removeRow)
+				{
+					continue;
+				}
+				var cd = 0;
+				for (var c = 0; c < Columns; c++)
+				{
+					if (c == removeColumn)
+					{
+						continue;
+					}
+					values[rd, cd] = _values[r, c];
+					cd++;
+				}
+				rd++;
+			}
+			return new Matrix(values);
+		}
+
+		public Matrix Inverse()
+		{
+			var det = Determinant();
+			var m = Zero(Rows, Columns);
+			for (var row = 0; row < Rows; row++)
+			{
+				for (var column = 0; column < Columns; column++)
+				{
+					var cofactor = Cofactor(row, column);
+
+					// Reversing (row, column) here does the transpose for us:
+					m[column, row] = cofactor / det;
+				}
+			}
+
 			return m;
 		}
 
@@ -86,7 +184,7 @@ namespace raytracer.math
 			{
 				for (var c = 0; c < Columns; c++)
 				{
-					if (!MathHelper.Equals(this[r, c], other[r, c]))
+					if (!MathHelper.Equals(_values[r, c], other[r, c]))
 					{
 						return false;
 					}
@@ -107,6 +205,31 @@ namespace raytracer.math
 		public override int GetHashCode()
 		{
 			return base.GetHashCode();
+		}
+
+		public override string ToString()
+		{
+			var sb = new StringBuilder();
+			sb.Append($"Matrix({Rows},{Columns})=>{{");
+			for (var r = 0; r < Rows; r++)
+			{
+				sb.Append("{");
+				for (var c = 0; c < Columns; c++)
+				{
+					sb.Append(_values[r, c]);
+					if (c != Columns - 1)
+					{
+						sb.Append(",");
+					}
+				}
+				sb.Append("}");
+				if (r != Rows - 1)
+				{
+					sb.Append(",");
+				}
+			}
+			sb.Append("}");
+			return sb.ToString();
 		}
 
 		#endregion
