@@ -86,6 +86,66 @@ namespace raytracer.math
 			return m;
 		}
 
+		public static Matrix Translation(float x, float y, float z)
+		{
+			var m = Identity(4);
+			m[0, 3] = x;
+			m[1, 3] = y;
+			m[2, 3] = z;
+			return m;
+		}
+
+		public static Matrix Scaling(float x, float y, float z)
+		{
+			var m = Identity(4);
+			m[0, 0] = x;
+			m[1, 1] = y;
+			m[2, 2] = z;
+			return m;
+		}
+
+		public static Matrix RotationX(float radians)
+		{
+			var m = Matrix.Identity(4);
+			m[1, 1] = (float)Math.Cos(radians);
+			m[1, 2] = (float)-Math.Sin(radians);
+			m[2, 1] = (float)Math.Sin(radians);
+			m[2, 2] = (float)Math.Cos(radians);
+			return m;
+		}
+
+		public static Matrix RotationY(float radians)
+		{
+			var m = Matrix.Identity(4);
+			m[0, 0] = (float)Math.Cos(radians);
+			m[0, 2] = (float)Math.Sin(radians);
+			m[2, 0] = (float)-Math.Sin(radians);
+			m[2, 2] = (float)Math.Cos(radians);
+			return m;
+		}
+
+		public static Matrix RotationZ(float radians)
+		{
+			var m = Matrix.Identity(4);
+			m[0, 0] = (float)Math.Cos(radians);
+			m[0, 1] = (float)-Math.Sin(radians);
+			m[1, 0] = (float)Math.Sin(radians);
+			m[1, 1] = (float)Math.Cos(radians);
+			return m;
+		}
+
+		public static Matrix Shearing(float xy, float xz, float yx, float yz, float zx, float zy)
+		{
+			var m = Matrix.Identity(4);
+			m[0, 1] = xy;
+			m[0, 2] = xz;
+			m[1, 0] = yx;
+			m[1, 2] = yz;
+			m[2, 0] = zx;
+			m[2, 1] = zy;
+			return m;
+		}
+
 		public Matrix Transpose()
 		{
 			var m = Zero(Columns, Rows);

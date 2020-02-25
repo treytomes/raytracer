@@ -17,12 +17,24 @@ namespace raytracer.math
 		/// </remarks>
 		public const float EPSILON = 0.00001f;
 
+		public const float PI = (float)Math.PI;
+
 		/// <summary>
 		/// Are <paramref name="a"/> and <paramref name="b"/> approximately equal?
 		/// </summary>
 		public static bool Equals(float a, float b)
 		{
 			return Math.Abs(a - b) < EPSILON;
+		}
+
+		public static float RadiansToDegrees(float radians)
+		{
+			return radians * 180.0f / PI;
+		}
+
+		public static float DegreesToRadians(float degrees)
+		{
+			return degrees * PI / 180.0f;
 		}
 	}
 }
