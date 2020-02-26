@@ -58,8 +58,10 @@
 				return null;
 			}
 
-			var t1 = (float)(-b - System.Math.Sqrt(discriminant)) / (2 * a);
-			var t2 = (float)(-b + System.Math.Sqrt(discriminant)) / (2 * a);
+			var aa = 2 * a;
+			var disSqrt = System.Math.Sqrt(discriminant);
+			var t1 = (float)(-b - disSqrt) / aa;
+			var t2 = (float)(-b + disSqrt) / aa;
 
 			return new[] {
 				new Intersection(t1, this),
