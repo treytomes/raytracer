@@ -19,7 +19,7 @@ namespace raytracer
 
 		#region Constants
 
-		private const int TARGET_FPS = 60;
+		private const int TARGET_FPS = 120;
 
 		#endregion
 

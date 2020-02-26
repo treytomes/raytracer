@@ -35,23 +35,25 @@ namespace raytracer
 		{
 			base.Update(gameTime);
 
+			//var delta = gameTime.TotalTime.TotalSeconds * 16f;
+			var delta = gameTime.TotalTime.TotalMilliseconds / 32;
 			_sphere.Transform =
-				Matrix.Scaling(1, (float)System.Math.Sin(MathHelper.DegreesToRadians((float)gameTime.TotalTime.TotalSeconds * 8f)), 1) *
-				Matrix.Scaling((float)System.Math.Cos(MathHelper.DegreesToRadians((float)gameTime.TotalTime.TotalSeconds * 8f)), 1, 1) *
-				Matrix.Shearing((float)System.Math.Sin(MathHelper.DegreesToRadians((float)gameTime.TotalTime.TotalSeconds * 8f)), 0, 0, 0, 0, 0);
+				Matrix.Scaling(1, (float)System.Math.Sin(MathHelper.DegreesToRadians((float)delta)), 1) *
+				Matrix.Scaling((float)System.Math.Cos(MathHelper.DegreesToRadians((float)delta)), 1, 1) *
+				Matrix.Shearing((float)System.Math.Sin(MathHelper.DegreesToRadians((float)delta)), 0, 0, 0, 0, 0);
 		}
 
 		public override void Render(GameTime gameTime)
 		{
 			base.Render(gameTime);
 
-			Parallel.For(0, ScreenHeight, y =>
+			Parallel.For(0, ScreenHeight, new ParallelOptions() { MaxDegreeOfParallelism = ScreenHeight }, y =>
 			{
 				// Compute the world y-coordinate.
 				// Y is intentionally inverted from what you may expect (top = +half, bottom = -half).
 				var worldY = _half - _pixelHeight * y;
 
-				Parallel.For(0, ScreenWidth, x =>
+				Parallel.For(0, ScreenWidth, new ParallelOptions() { MaxDegreeOfParallelism = ScreenWidth }, x =>
 				{
 					// Compute the world x-coordinate (left = -half, right = +half).
 					var worldX = _pixelWidth * x - _half;
@@ -72,7 +74,6 @@ namespace raytracer
 					}
 				});
 			});
-
 
 			//for (var y = 0; y < ScreenHeight; y++)
 			//{
