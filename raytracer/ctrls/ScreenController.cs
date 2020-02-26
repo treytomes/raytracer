@@ -11,8 +11,8 @@ namespace raytracer
 
 		public const int BITS_PER_PIXEL = 24;
 		public const int BYTES_PER_PIXEL = BITS_PER_PIXEL / 8;
-		private const int DEFAULT_WIDTH = 256 * 3;
-		private const int DEFAULT_HEIGHT = 224 * 3;
+		private const int DEFAULT_WIDTH = 256; // 256 * 3;
+		private const int DEFAULT_HEIGHT = 256; // 224 * 3;
 
 		#endregion
 

@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "raytracer.demo.projectiles"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "raytracer.demo.clock", "raytracer.demo.clock\raytracer.demo.clock.csproj", "{2852C597-F30C-4A73-98E9-D3D0AB1335FA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "raytracer.demo.sphere", "raytracer.demo.sphere\raytracer.demo.sphere.csproj", "{EC4066B4-7D91-466A-939D-603F66DF6A85}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{2852C597-F30C-4A73-98E9-D3D0AB1335FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2852C597-F30C-4A73-98E9-D3D0AB1335FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2852C597-F30C-4A73-98E9-D3D0AB1335FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC4066B4-7D91-466A-939D-603F66DF6A85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC4066B4-7D91-466A-939D-603F66DF6A85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC4066B4-7D91-466A-939D-603F66DF6A85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC4066B4-7D91-466A-939D-603F66DF6A85}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
