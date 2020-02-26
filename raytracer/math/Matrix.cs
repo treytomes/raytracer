@@ -18,6 +18,7 @@ namespace raytracer.math
 		public readonly int Columns;
 		private readonly int _size;
 		private readonly float[,] _values;
+		private readonly float?[,] _cofactors;
 
 		#endregion
 
@@ -31,6 +32,8 @@ namespace raytracer.math
 
 			_values = new float[Rows, Columns];
 			Array.Copy(values, 0, _values, 0, _size);
+
+			_cofactors = new float?[Rows, Columns];
 		}
 
 		/// <remarks>
@@ -49,6 +52,8 @@ namespace raytracer.math
 
 			_values = new float[Rows, Columns];
 			Array.Copy(values.ToArray(), 0, _values, 0, _size);
+
+			_cofactors = new float?[Rows, Columns];
 		}
 
 		#endregion
@@ -63,7 +68,11 @@ namespace raytracer.math
 			}
 			set
 			{
-				_values[row, column] = value;
+				if (_values[row, column] != value)
+				{
+					_values[row, column] = value;
+					_cofactors[row, column] = null;
+				}
 			}
 		}
 
@@ -188,8 +197,15 @@ namespace raytracer.math
 
 		public float Cofactor(int row, int column)
 		{
-			return Minor(row, column) * ((((row + column) % 2) == 0) ? 1 : -1);
-			//return Minor(row, column) * (((row + column + 1) % 2) * 2 - 1);
+			//return Minor(row, column) * ((((row + column) % 2) == 0) ? 1 : -1);
+			var value = _cofactors[row, column];
+			if (!value.HasValue)
+			{
+				value = Minor(row, column) * ((((row + column) % 2) == 0) ? 1 : -1);
+				//value = Minor(row, column) * (((row + column + 1) % 2) * 2 - 1);
+				_cofactors[row, column] = value;
+			}
+			return value.Value;
 		}
 
 		/// <summary>
