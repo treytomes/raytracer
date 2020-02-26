@@ -25,3 +25,8 @@ points onto an Image control.  It's not as bad as it sounds.
 
 ## Thursday, February 20, 2020
 Still feeling conflicted on my Tuple code.  It's the basis of everything else, so it *must* be as perfect as possible.  Chapter 2 is accomplished.  I have made a point of doing the extra side-projects suggested by the author, so the Visual Studio solution also comes with an odd little projectile cannon simulator.  Next up is matrices.
+
+## Wednesday, February 26, 2020
+I got ray/sphere intersections in place, and my renderer can distort and draw a sphere.
+Everything ran a lot faster when I started pre-calculating the inverse of the transformation matrix as soon as the transformation is initially calculated.
+Suprisingly, turning the for-loops into Parallel.For loops didn't speed things up in a noticeable way.  I'll try it again later when the math becomes more complex.
