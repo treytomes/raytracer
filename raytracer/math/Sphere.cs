@@ -6,6 +6,7 @@
 
 		private Matrix _transform;
 		private Matrix _inverseTransform;
+		private Matrix _inverseTransposeTransform;
 
 		#endregion
 
@@ -32,6 +33,7 @@
 
 				// It is *definitely* more efficient to store the inverse as a field on assigning the transform.
 				_inverseTransform = _transform.Inverse();
+				_inverseTransposeTransform = _inverseTransform.Transpose();
 			}
 		}
 
@@ -39,7 +41,15 @@
 
 		#region Methods
 
-		public Intersection[] Intersect(Ray ray)
+		public Tuple NormalAt(Tuple worldPoint)
+		{
+			var objectPoint = _inverseTransform * worldPoint;
+			var objectNormal = (objectPoint - Tuple.Point(0, 0, 0));
+			var worldNormal = _inverseTransposeTransform * objectNormal;
+			return Tuple.Vector(worldNormal.X, worldNormal.Y, worldNormal.Z).Normalize();
+		}
+
+		public IntersectionList Intersect(Ray ray)
 		{
 			ray = ray.Transform(_inverseTransform);
 
@@ -63,10 +73,7 @@
 			var t1 = (float)(-b - disSqrt) / aa;
 			var t2 = (float)(-b + disSqrt) / aa;
 
-			return new[] {
-				new Intersection(t1, this),
-				new Intersection(t2, this)
-			};
+			return new IntersectionList(new Intersection(t1, this), new Intersection(t2, this));
 		}
 
 		public override string ToString()

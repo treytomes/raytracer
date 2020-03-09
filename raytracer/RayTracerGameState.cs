@@ -66,7 +66,7 @@ namespace raytracer
 					ScreenController.Instance.SetPixel(x, y, new Color(0, 0, 0));
 					if (xs != null)
 					{
-						var hit = new IntersectionList(xs).Hit();
+						var hit = xs.Hit();
 						if (hit.Object != null)
 						{
 							ScreenController.Instance.SetPixel(x, y, _color);
